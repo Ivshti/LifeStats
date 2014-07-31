@@ -1,0 +1,16 @@
+{
+  "name": "LifeStats",
+  "version": "0.0.0",
+  "description": "Generate statistics page from moves export",
+  "main": "generate.js",
+  "dependencies": {
+    "lodash": "~2.4.1",
+    "moment": "~2.8.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ivo Georgiev",
+  "license": "ISC"
+}
