@@ -2,14 +2,17 @@
 var _ = require("lodash"),
 	moment = require("moment"),
 	mpath = require("mpath"),
-	strptime = require("micro-strptime").strptime;
+	strptime = require("micro-strptime").strptime,
+	jade = require("jade"),
+	fs = require("fs");
 
 var datas = { activities: require("./moves/activities"), places: require("./moves/places") };
 var charts = require("./charts");
+var template = jade.compile(fs.readFileSync("./template.jade").toString(), {});
 
 var dateFormat = function(d) { return strptime(d,"%Y%m%dT%H%M%S%Z") }
 
-var results = [];
+var chartResults = [];
 charts.forEach(function(chart) {
 	var data = datas[chart.from].map(function(x) {
 		var date = x.date.slice(0,4)+"-"+x.date.slice(4,6)+"-"+x.date.slice(6,8);
@@ -24,13 +27,13 @@ charts.forEach(function(chart) {
 		});
 
 		return { 
-			name: chart.name,
 			date: date,
 			data: filtered,
 			result: chart.aggregate && filtered.map(function(x) { return mpath.get(chart.aggregate, x) }).reduce(function(a, b) { return a+b }, 0)
-		}
+		};
 	});
 
+	/* Calculate longest true period */
 	var truePeriod = [], longestPeriod = [];
 	data.forEach(function(day) {
 		var isTrue = !!day.result;
@@ -39,10 +42,17 @@ charts.forEach(function(chart) {
 
 		if (! isTrue) truePeriod = [];
 	});
-	console.log({ 
+	
+	/* Build the result */
+	chartResults.push({ 
+		name: chart.name,
 		days: data,
 		overall: data.map(function(x) { return x.result }).reduce(function(a,b) { return a+b }, 0),
 		trueLength: data.filter(function(x) { return x.result }).length,
-		truePeriod: longestPeriod
+		truePeriod: longestPeriod,
+		maximum: Math.max.apply(Math, data.map(function(x) { return x.result }))
 	});
 });
+
+
+console.log(template({ charts: chartResults }))
