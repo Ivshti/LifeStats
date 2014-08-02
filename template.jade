@@ -1,7 +1,31 @@
 doctype html
 
 html
+	head
+		style.
+			.activity { 
+				width: 500px; height: 205px;
+			}
+			.days {
+				float: right;
+			}
+			.week { width: 108px; transform: rotate(90deg);}
+			ul,ol { list-style: none;}
+
+			.days li {
+				margin: 1.5px;
+				width: 12px; height: 12px;
+				float: right;
+			}
+
+
+
 	body
 		for chart in charts
-			div
+			div.activity
 				h2= chart.name
+				.days
+					ul
+						.week
+							for day in chart.days
+								li(style="background-color: #{chart.color}; opacity: #{day.result / chart.maximum}")

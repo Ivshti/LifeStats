@@ -46,7 +46,8 @@ charts.forEach(function(chart) {
 	/* Build the result */
 	chartResults.push({ 
 		name: chart.name,
-		days: data,
+		color: chart.color,
+		days: data.reverse(),
 		overall: data.map(function(x) { return x.result }).reduce(function(a,b) { return a+b }, 0),
 		trueLength: data.filter(function(x) { return x.result }).length,
 		truePeriod: longestPeriod,
@@ -55,4 +56,4 @@ charts.forEach(function(chart) {
 });
 
 
-console.log(template({ charts: chartResults }))
+fs.writeFile("./output.html", template({ charts: chartResults }))
