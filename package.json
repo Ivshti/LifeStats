@@ -1,11 +1,14 @@
 {
   "name": "LifeStats",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Generate statistics page from moves export",
   "main": "generate.js",
   "dependencies": {
     "lodash": "~2.4.1",
-    "moment": "~2.8.0"
+    "moment": "~2.8.0",
+    "jade": "*",
+    "strptime": "*",
+    "mpath": "*"
   },
   "devDependencies": {},
   "scripts": {
