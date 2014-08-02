@@ -19,11 +19,12 @@ charts.forEach(function(chart) {
 			// TODO: clamp start and end times to the limits of this day
 			var start = moment(date).startOf("day").toDate().getTime(),
 				end = moment(date).endOf("day").toDate().getTime();
-			if (! seg.duration) seg.duration = Math.round((Math.max(dateFormat(seg.endTime).getTime(), start) -  Math.min(end, dateFormat(seg.startTime).getTime()))/1000);
+			if (! seg.duration) seg.duration = Math.round((Math.min(dateFormat(seg.endTime).getTime(), end) -  Math.max(start, dateFormat(seg.startTime).getTime()))/1000);
 			return seg;
 		});
 
 		return { 
+			name: chart.name,
 			date: date,
 			data: filtered,
 			result: chart.aggregate && filtered.map(function(x) { return mpath.get(chart.aggregate, x) }).reduce(function(a, b) { return a+b }, 0)
