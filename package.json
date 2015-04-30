@@ -4,11 +4,11 @@
   "description": "Generate statistics page from moves export",
   "main": "generate.js",
   "dependencies": {
+    "jade": "0.x.x",
     "lodash": "~2.4.1",
     "moment": "~2.8.0",
-    "jade": "*",
-    "strptime": "*",
-    "mpath": "*"
+    "mpath": "*",
+    "strptime": "*"
   },
   "devDependencies": {},
   "scripts": {
